@@ -12,7 +12,27 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='images/icons/favicon.ico')}}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='fonts/iconic/css/material-design-iconic-font.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/animate/animate.css')}}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/css-hamburgers/hamburgers.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/animsition/css/animsition.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/select2/select2.min.css')}}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/daterangepicker/daterangepicker.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}"><link rel="shortcut icon" href="{{url_for('static', filename='images/icons/favicon.ico')}}">
 </head>
 
 <body>
@@ -48,9 +68,83 @@
                 </li>
             </ul>
         </div>
-    </nav>
-    <h1>Login</h1>
-    <p>A login page</p>
+    </nav>{% for msg in get_flashed_messages() %}
+    {% if msg[0] == "0" %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p>{{msg[1:]}}</p>
+    </div>
+    {% elif msg[0] == "1" %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p>{{msg[1:]}}</p>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <div class="limiter">
+		<div class="container-login100" style="background-image: url({{url_for('static', filename='images/bg-01.jpg')}});">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<form class="login100-form validate-form" method="POST">
+					<span class="login100-form-title p-b-49">
+						Add Product
+					</span>
+
+					<div class="swrap-input100 validate-input m-b-23" data-validate = "UPC Code is required">
+                        <input class="sinput100" type="number" name="upc" placeholder="UPC Code (All Numbers Under Barcode)" id="upc" required>
+                    </div>
+                    
+                    <div class="swrap-input100 validate-input m-b-23" data-validate = "Quantity is required">
+                        <input class="sinput100" type="number" name="quantity" id="quantity" placeholder="Quantity" required>
+                    </div>
+                    
+                    <div class="swrap-input100 validate-input m-b-23" data-validate = "Expiry Date is required">
+                        <input class="sinput100" type="date" name="expiry" id="expiry" placeholder="Expiry Date" required>
+                    </div>
+                    
+
+					<br>
+					<br>
+					
+					<!--<div class="text-right p-t-8 p-b-31">
+						<a href="#">
+							Forgot password?
+						</a>
+					</div>-->
+					
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn"><input type="submit" value="">Submit</button>
+						</div>
+					</div>
+
+					<!--<div class="txt1 text-center p-t-54 p-b-20">
+						<span>
+							Or Sign Up Using
+						</span>
+					</div>
+
+					<div class="flex-c-m">
+						<a href="#" class="login100-social-item bg1">
+							<i class="fa fa-facebook"></i>
+						</a>
+
+						<a href="#" class="login100-social-item bg2">
+							<i class="fa fa-twitter"></i>
+						</a>
+
+						<a href="#" class="login100-social-item bg3">
+							<i class="fa fa-google"></i>
+						</a>
+					</div>-->
+				</form>
+			</div>
+		</div>
+	</div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -60,7 +154,22 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-    <script src="{{url_for('static', filename='index.js')}}"></script>
+    <!--===============================================================================================-->
+	<script src="{{url_for('static', filename='vendor/jquery/jquery-3.2.1.min.js')}}"></script>
+    <!--===============================================================================================-->
+        <script src="{{url_for('static', filename='vendor/animsition/js/animsition.min.js')}}"></script>
+    <!--===============================================================================================-->
+        <script src="{{url_for('static', filename='vendor/bootstrap/js/popper.js')}}"></script>
+        <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+    <!--===============================================================================================-->
+        <script src="{{url_for('static', filename='vendor/select2/select2.min.js')}}"></script>
+    <!--===============================================================================================-->
+        <script src="{{url_for('static', filename='vendor/daterangepicker/moment.min.js')}}"></script>
+        <script src="{{url_for('static', filename='vendor/daterangepicker/daterangepicker.js')}}"></script>
+    <!--===============================================================================================-->
+        <script src="{{url_for('static', filename='vendor/countdowntime/countdowntime.js')}}"></script>
+    <!--===============================================================================================-->
+        <script src="{{url_for('static', filename='js/main.js')}}"></script>
 
 </body>
 

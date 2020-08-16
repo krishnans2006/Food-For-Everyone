@@ -13,6 +13,28 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+     <!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{{url_for('static', filename='images/icons/favicon.ico')}}"/>
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='fonts/iconic/css/material-design-iconic-font.min.css')}}">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/animate/animate.css')}}">
+    <!--===============================================================================================-->	
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/css-hamburgers/hamburgers.min.css')}}">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/animsition/css/animsition.min.css')}}">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/select2/select2.min.css')}}">
+    <!--===============================================================================================-->	
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/daterangepicker/daterangepicker.css')}}">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/util.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main.css')}}">
+    <!--===============================================================================================-->
 </head>
 
 <body>
@@ -48,8 +70,86 @@
                 </li>
             </ul>
         </div>
-    </nav>
-    <h1>Donor Signup</h1>
+    </nav>{% for msg in get_flashed_messages() %}
+    {% if msg[0] == "0" %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p>{{msg[1:]}}</p>
+    </div>
+    {% elif msg[0] == "1" %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p>{{msg[1:]}}</p>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <div class="limiter">
+		<div class="container-login100" style="background-image: url({{url_for('static', filename='images/bg-01.jpg')}});">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<form class="login100-form validate-form" method="POST">
+					<span class="login100-form-title p-b-49">
+						Sign Up (cont.)
+                    </span>
+                    
+                    
+                    <p class="fs-20">Please choose your role:</p>
+                    <input type="radio" id="supermarket" name="role" value="Supermarket" required>
+                    <label class="fs-20" for="supermarket">Supermarket</label><br>
+                    <input type="radio" id="individualdonor" name="role" value="Individual Donor" required>
+                    <label class="fs-20" for="individualdonor">Individual Donor</label><br>
+                    
+
+
+					<br>
+					<br>
+					
+					<!--<div class="text-right p-t-8 p-b-31">
+						<a href="#">
+							Forgot password?
+						</a>
+					</div>-->
+					
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn"><input type="submit" value="">Sign Up</button>
+						</div>
+					</div>
+
+					<!--<div class="txt1 text-center p-t-54 p-b-20">
+						<span>
+							Or Sign Up Using
+						</span>
+					</div>
+
+					<div class="flex-c-m">
+						<a href="#" class="login100-social-item bg1">
+							<i class="fa fa-facebook"></i>
+						</a>
+
+						<a href="#" class="login100-social-item bg2">
+							<i class="fa fa-twitter"></i>
+						</a>
+
+						<a href="#" class="login100-social-item bg3">
+							<i class="fa fa-google"></i>
+						</a>
+					</div>-->
+
+					<div class="flex-col-c p-t-50">
+						<a href="/login" class="txt2">
+							Login
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+    <!--<h1>Donor Signup</h1>
     <form method="post">
         <p>Please choose your role:</p>
         <input type="radio" id="supermarket" name="role" value="Supermarket">
@@ -57,7 +157,7 @@
         <input type="radio" id="individualdonor" name="role" value="Individual Donor">
         <label for="individualdonor">Individual Donor</label><br>
         <input type="submit" value="Sign Up">
-    </form>
+    </form>-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -67,7 +167,22 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-    <script src="{{url_for('static', filename='index.js')}}"></script>
+    <!--===============================================================================================-->
+	<script src="{{url_for('static', filename='vendor/jquery/jquery-3.2.1.min.js')}}"></script>
+    <!--===============================================================================================-->
+        <script src="{{url_for('static', filename='vendor/animsition/js/animsition.min.js')}}"></script>
+    <!--===============================================================================================-->
+        <script src="{{url_for('static', filename='vendor/bootstrap/js/popper.js')}}"></script>
+        <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+    <!--===============================================================================================-->
+        <script src="{{url_for('static', filename='vendor/select2/select2.min.js')}}"></script>
+    <!--===============================================================================================-->
+        <script src="{{url_for('static', filename='vendor/daterangepicker/moment.min.js')}}"></script>
+        <script src="{{url_for('static', filename='vendor/daterangepicker/daterangepicker.js')}}"></script>
+    <!--===============================================================================================-->
+        <script src="{{url_for('static', filename='vendor/countdowntime/countdowntime.js')}}"></script>
+    <!--===============================================================================================-->
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
 
 </body>
 

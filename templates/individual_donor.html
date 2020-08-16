@@ -12,7 +12,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}"><link rel="shortcut icon" href="{{url_for('static', filename='images/icons/favicon.ico')}}">
 </head>
 
 <body>
@@ -48,9 +48,38 @@
                 </li>
             </ul>
         </div>
-    </nav>
-    <h1>Login</h1>
-    <p>A login page</p>
+    </nav>{% for msg in get_flashed_messages() %}
+    {% if msg[0] == "0" %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p>{{msg[1:]}}</p>
+    </div>
+    {% elif msg[0] == "1" %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p>{{msg[1:]}}</p>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <h1>Individual Donor</h1>
+    <table style="border: 2px; border-color: darkgray;">
+        <th>
+            <td>Food Bank</td>
+            <td>Address</td>
+            <td>Email</td>
+        </th>
+        {% for row in rows %}
+        <tr>
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>
+            <td>{{row[3]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>

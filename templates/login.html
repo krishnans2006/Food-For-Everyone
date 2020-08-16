@@ -34,7 +34,7 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/util.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main.css')}}">
-<!--===============================================================================================-->
+<!--===============================================================================================--><link rel="shortcut icon" href="{{url_for('static', filename='images/icons/favicon.ico')}}">
 </head>
 
 <body>
@@ -70,8 +70,24 @@
                 </li>
             </ul>
         </div>
-    </nav>
-    <h1>Login</h1>
+	</nav>
+	{% for msg in get_flashed_messages() %}
+	{% if msg[0] == "0" %}
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<p>{{msg[1:]}}</p>
+	</div>
+	{% elif msg[0] == "1" %}
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<p>{{msg[1:]}}</p>
+	</div>
+	{% endif %}
+	{% endfor %}
     <div class="limiter">
 		<div class="container-login100" style="background-image: url({{url_for('static', filename='images/bg-01.jpg')}});">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
@@ -80,7 +96,7 @@
 						Login
 					</span>
 
-					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
+					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">
 						<span class="label-input100">Email</span>
 						<input class="input100" type="email" name="email" placeholder="Type your email">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
@@ -91,6 +107,9 @@
 						<input class="input100" type="password" name="pwd" placeholder="Type your password">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
+
+					<br>
+					<br>
 					
 					<!--<div class="text-right p-t-8 p-b-31">
 						<a href="#">
@@ -101,7 +120,7 @@
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<input type="submit" class="login100-form-btn" value="Log In">
+							<button class="login100-form-btn"><input type="submit" value="">Login</button>
 						</div>
 					</div>
 
@@ -125,8 +144,8 @@
 						</a>
 					</div>-->
 
-					<div class="flex-col-c p-t-155">
-						<a href="#" class="txt2">
+					<div class="flex-col-c p-t-50">
+						<a href="/signup" class="txt2">
 							Sign Up
 						</a>
 					</div>
@@ -134,11 +153,11 @@
 			</div>
 		</div>
 	</div>
-    <form method="POST">
+    <!--<form method="POST">
         <input type="text" name="email" id="email">
         <input type="password" name="pwd" id="pwd">
         <input type="submit" value="Log In">
-    </form>
+    </form>-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
