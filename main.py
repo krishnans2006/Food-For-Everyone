@@ -28,7 +28,7 @@ headers = {
 }
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "sar"
+app.config["SECRET_KEY"] = "sa"
 
 
 def create_connection(db_file):
@@ -146,9 +146,12 @@ def login():
 
 @app.route("/logout/")
 def logout():
-    session["logged_in"] = False
-    del session["name"], session["address"], session[
-        "email"], session["pwd"], session["role"], session["products"]
+    try:
+        session["logged_in"] = False
+        del session["name"], session["address"], session[
+            "email"], session["pwd"], session["role"], session["products"]
+    except Exception as e:
+        print(str(e))
     return redirect(url_for("index"))
 
 
@@ -223,31 +226,53 @@ def add_batch():
         session["products"] = []
     if request.method == "POST":
         date_available = request.form["pickup"]
-        conn = create_connection("project.db")
-        cursor = conn.cursor()
-        cursor.execute(
-            f"SELECT * FROM accounts WHERE email == '{session['email']}'")
-        my_id = cursor.fetchone()[0]
-        upcs = brands = titles = descriptions = sizes = weights = image_links = quantities = expiries = []
-        for a_product in session.get("products"):
-            product = json.loads(a_product)
-            upcs.append(product.get("upc"))
-            brands.append(product.get("brand"))
-            titles.append(product.get("title"))
-            descriptions.append(product.get("description"))
-            sizes.append(product.get("size"))
-            weights.append(product.get("weight"))
-            get_imgs = product.get("images")
-            if get_imgs:
-                image_links.append(get_imgs[0])
-            else:
-                image_links.append("No Image")
-            quantities.append(product.get("quantity"))
-            expiries.append(product.get("expiry"))
-        cursor.execute(
-            f"""INSERT INTO batches(product_upc,product_brand,product_title,product_description,product_size,product_weight,product_image_link,owner,date_available)
-            VALUES ({", ".join(upcs)},{", ".join(brands)},{", ".join(titles)},{", ".join(descriptions)},{", ".join(sizes)},{", ".join(weights)},{", ".join(image_links)},{", ".join(quantities)},{", ".join(expiries)},{my_id},{date_available})""")
-        rows = cursor.fetchall()
+        try:
+            conn = create_connection("project.db")
+            cursor = conn.cursor()
+            cursor.execute(
+                f"SELECT * FROM accounts WHERE email == '{session['email']}'")
+            my_id = cursor.fetchone()[0]
+            upcs = []
+            brands = []
+            titles = []
+            descriptions = []
+            sizes = []
+            weights = []
+            image_links = []
+            quantities = []
+            expiries = []
+            for a_product in session.get("products"):
+                product = json.loads(a_product)
+                upcs.append(product["upc"].replace(",", "."))
+                brands.append(product["brand"].replace(",", "."))
+                titles.append(product["title"].replace(",", "."))
+                descriptions.append(product["description"].replace(",", "."))
+                sizes.append(product["size"].replace(",", "."))
+                weights.append(product["weight"].replace(",", "."))
+                get_imgs = product["images"].replace(",", "<")
+                if get_imgs:
+                    image_links.append(get_imgs[0])
+                else:
+                    image_links.append("No Image")
+                quantities.append(product.get("quantity"))
+                expiries.append(product.get("expiry"))
+            execute = f"""INSERT INTO batches(product_upc,product_brand,product_title,product_description,product_size,product_weight,product_image_link,product_quantity,product_expiry,owner,date_available)
+            VALUES ('{", ".join(upcs)}',
+                '{", ".join(brands)}',
+                '{", ".join(titles)}',
+                '{", ".join(descriptions)}',
+                '{", ".join(sizes)}',
+                '{", ".join(weights)}',
+                '{", ".join(image_links)}',
+                '{", ".join(quantities)}',
+                '{", ".join(expiries)}',
+                {my_id},
+                {date_available})"""
+            print("Executing: \n" + execute)
+            cursor.execute(execute)
+            conn.commit()
+        except Exception as e:
+            print("Error: " + str(e))
     return render_template("add_batch.html", user=session.get("name"), products=session.get("products"), loads=json.loads)
 
 
@@ -268,7 +293,7 @@ def add_product():
             session["products"].append(data)
             print(json.loads(session["products"][0])["description"])
         except Exception as e:
-            flash("0" + str(e))
+            flash("0" + "Error gathering barcode data! " + str(e))
             print(e)
             return redirect(url_for("add_product"))
         return redirect(url_for("add_batch"))

@@ -181,10 +181,14 @@ iframe {
 }
 
 .wrap-login100 {
-  width: 500px;
+  width: 600px;
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
+}
+
+.ah6 {
+  padding-bottom: 3px;
 }
 
 

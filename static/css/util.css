@@ -2683,6 +2683,23 @@
 	align-items: center;
 }
 
+.bcolumn {
+	float: left;
+	width: 30%;
+}
+
+.wcolumn {
+	float: left;
+	width: 50%;
+}
+  
+  /* Clear floats after the columns */
+.brow:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
 .flex-r-m {
 	display: -webkit-box;
 	display: -webkit-flex;

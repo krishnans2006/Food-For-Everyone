@@ -37,35 +37,30 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="/">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
     
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto w-100">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
+                    <a class="nav-link" href="/login">Log In</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
+                    <a class="nav-link" href="/signup">Sign Up</a>
                 </li>
+                {% if user %}
+                <li class="nav-item ml-auto">
+                    <p style="display: inline-block;" class="navbar-text">You are currently logged in as {{user}}</p>
+                    <a href="/logout" type="button" class="nav-link btn btn-warning" style="display: inline-block;">Log
+                        Out</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>{% for msg in get_flashed_messages() %}
@@ -119,37 +114,26 @@
 							<button class="login100-form-btn"><input type="submit" value="">Create Batch</button>
 						</div>
                     </div>
+                    <br><br>
                     
                     {% if products and loads(products[0]) %}
-                    <table>
-                        <th colspan="8">Products</th><br>
-                        <tr>
-                            <td>UPC Code</td>
-                            <td>Brand</td>
-                            <td>Title</td>-->
-                            <!--<td>Description</td>-->
-                            <td>Size</td>
-                            <td>Weight</td>
-                            <td>Image Link</td>
-                            <td>Quantity</td>
-                            <td>Expiration Date</td>
-                        </tr>
-                    {% for unloaded_product in products %}
-                    {% with product = loads(unloaded_product) %}
-                        <tr>
-                            <td>{{product["upc"]}}</td>
-                            <td>{{product["brand"]}}</td>
-                            <td>{{product["title"]}}</td>
-                            <!--<td>{{product["description"]}}</td>-->
-                            <td>{{product["size"]}}</td>
-                            <td>{{product["weight"]}}</td>
-                            <td>{{product["images"][0]}}</td>
-                            <td>{{product["quantity"]}}</td>
-                            <td>{{product["expiration"]}}</td>
-                        </tr>
+                    {% for a_product in products %}
+                    {% with %}
+                        {% set product = loads(a_product) %}
+                        <div class="brow">
+                            <div class="bcolumn"><img src="{{product['images'][0].replace('<', ',')}}" width="100px" height="100px"></div>
+                            <div class="wcolumn">
+                                <h6 class="ah6">UPC Code: {{product["upc"]}}</h6>
+                                <h6 class="ah6">Brand: {{product["brand"]}}</h6>
+                                <h6 class="ah6">Title: {{product["title"]}}</h6>
+                                <h6 class="ah6">Size: {{product["size"]}}</h6>
+                                <h6 class="ah6">Weight: {{product["weight"]}}</h6>
+                                <h6 class="ah6">Quantity: {{product["quantity"]}}</h6>
+                                <h6 class="ah6">Expiry Date: {{product["expiration"]}}</h6><br><br>
+                            </div>
+                        </div>  
                     {% endwith %}
                     {% endfor %}
-                    </table>
                     {% endif %}
 
 					<!--<div class="txt1 text-center p-t-54 p-b-20">
